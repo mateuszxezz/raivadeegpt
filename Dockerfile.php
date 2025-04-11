@@ -1,3 +1,6 @@
+
+# Dockerfile.php
+
 FROM php:8.2-fpm
 
 # Instala dependências
@@ -32,6 +35,12 @@ RUN php artisan key:generate && php artisan storage:link
 
 # Porta que o Laravel vai rodar
 EXPOSE 8000
+
+# Instala o Node.js (usando Node 18 LTS)
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs \
+    && npm install && npm run build
+
 
 # Comando para iniciar a aplicação
 CMD php artisan serve --host=0.0.0.0 --port=8000
